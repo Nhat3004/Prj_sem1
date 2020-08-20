@@ -2,7 +2,7 @@ drop database if exists Prj1;
 create database Prj1;
 use Prj1;
 -- CREATE USER 'shop'@'localhost' IDENTIFIED BY '88888888';
-
+GRANT ALL PRIVILEGES ON * . * TO 'shop'@'localhost';
 create table Shop(
 	shop_id 		int  			auto_increment 	primary key,
     shop_name 		varchar(50) 	not null,
