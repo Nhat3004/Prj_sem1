@@ -17,14 +17,14 @@ create table Staff(
     staff_address 	varchar(100) 	not null,
     staff_email 	varchar(100) 	not null 		unique,
     staff_id_card 	varchar(12) 	not null 		unique,
-    account 		varchar(20) 	not null 		unique,
-    password 		varchar(45) 	not null,
+    account 		varchar(32) 	not null 		unique,
+    password 		varchar(32) 	not null,
     position 		varchar(30) 	not null
 );
 
 create table Drink(
-	drink_id 		int 			auto_increment	primary key,
-    drink_code		varchar(10)		not null 		unique,
+	-- drink_id 		int 			auto_increment	primary key,
+    drink_code		varchar(10)		primary key not null,
     drink_category	varchar(60)		not null,
     drink_name 		varchar(60) 	not null,
     drink_unit_price decimal(20,2)  default 0
@@ -41,10 +41,10 @@ create table Invoice(
 
 create table InvoiceDetails(
 	invoice_id int 	not null,
-	drink_id int 	not null,
+	drink_code varchar(10) 	not null,
     quantity int 	not null,
-    constraint pk_InvoiceDetails primary key (invoice_id, drink_id),
+    constraint pk_InvoiceDetails primary key (invoice_id, drink_code),
     constraint fk_InvoiceDetails_Invoice foreign key(invoice_id) references Invoice(invoice_id),
-    constraint fk_InvoiceDetails_Drink foreign key(drink_id) references Drink(drink_id)
+    constraint fk_InvoiceDetails_Drink foreign key(drink_code) references Drink(drink_code)
 );
 
