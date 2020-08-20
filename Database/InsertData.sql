@@ -26,7 +26,7 @@ insert into Drink(drink_code, drink_category, drink_name, drink_unit_price)
         ('MT016', 'Trà sữa', 'Trà sữa hạt dẻ', 39000),
         ('MT017', 'Trà sữa', 'Trà sữa vanilla', 39000),
         ('MT018', 'Trà sữa', 'Trà sữa socola', 32000),
-        ('MT019', 'Trà sữa', 'Trà sữa matcha', 32000)
+        ('MT019', 'Trà sữa', 'Trà sữa matcha', 32000),
         ('FtT01', 'Trà trái cây', 'Trà xanh / đen vị bưởi',32000),
         ('FtT02', 'Trà trái cây', 'Trà đen vị mận',32000),
         ('FtT03', 'Trà trái cây', 'Trà xanh / đen vị ô mai',32000),
