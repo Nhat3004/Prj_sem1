@@ -5,7 +5,7 @@ insert into Staff(staff_name, staff_tel, staff_address, staff_email, staff_id_ca
 			('Nông Hồng Cương', '0338423581','Nạng Thơn', 'hiamcuong1@gmail.com', '082377587', '38ed25b6ec4c911283f7da1626e9cead', '7a98924465e161165a7fa692b11649f1', 'Manager');
 
 insert into Shop(shop_name, shop_tel, shop_address)
-    values('SuckMyMilkTea', '0837827421', '18 Tam Trinh Hai Bà Trưng Hà Nội')
+    values('VTC Milk Tea', '0837827421', '18 Tam Trinh Hai Bà Trưng Hà Nội')
 
 insert into Drink(drink_code, drink_category, drink_name, drink_unit_price)
     values('MT01', 'Trà sữa', 'Trà sữa Matcha đậu đỏ', 40000),
