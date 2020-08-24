@@ -82,4 +82,19 @@ public class Staff {
     public void setPosition(String position) {
         this.position = position;
     }
+
+    @Override
+    public String toString() {
+        return "Staff{" +
+                "staffId=" + staffId +
+                ", account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", tel='" + tel + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", id_card='" + id_card + '\'' +
+                ", position='" + position + '\'' +
+                '}';
+    }
 }

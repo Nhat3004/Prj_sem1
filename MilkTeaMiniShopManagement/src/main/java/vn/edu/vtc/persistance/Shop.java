@@ -37,4 +37,14 @@ public class Shop {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    @Override
+    public String toString() {
+        return "Shop{" +
+                "shopId=" + shopId +
+                ", name='" + name + '\'' +
+                ", tel='" + tel + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
 }

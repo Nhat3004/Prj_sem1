@@ -1,6 +1,7 @@
 package vn.edu.vtc.dal;
 
 import vn.edu.vtc.persistance.Shop;
+
 import java.sql.*;
 
 public class ShopDAL {
@@ -11,14 +12,18 @@ public class ShopDAL {
         sp.setTel(rs.getString("shop_tel"));
         return sp;
     }
-    public Shop getShopById(int id) throws SQLException{
+
+    public Shop getShopById(int id) throws SQLException {
         Shop shop = new Shop();
-        String sql = "select * from Shop where shop_id ='"+id+"'";
-        try(Connection conn =DbUtil.getConnection();
-            Statement stm = conn.createStatement();
-            ResultSet rs =stm.executeQuery(sql)) {
-            shop = getShop(rs);
-        }catch (SQLException e){
+        String sql = "select * from Shop where shop_id=" + id;
+        try (Connection conn = DbUtil.getConnection();
+             Statement stm = conn.createStatement();
+             ResultSet rs = stm.executeQuery(sql)) {
+            while (rs.next()) {
+                shop = getShop(rs);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
             shop = null;
         }
         return shop;
