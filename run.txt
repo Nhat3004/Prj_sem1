@@ -1,3 +1,4 @@
+cd C:\Users\Admin\Desktop\Prj\Prj_sem1\MilkTeaMiniShopManagement
 mvn compile
 mnv package
 mvn clean dependency:copy-dependencies package
