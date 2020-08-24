@@ -26,6 +26,7 @@ public class StaffDAL {
 
     public Staff getStaff(final ResultSet rs) throws SQLException {
         Staff st = new Staff();
+        st.setStaffId(rs.getInt("staff_id"));
         st.setName(rs.getString("staff_name"));
         st.setTel(rs.getString("staff_tel"));
         st.setAddress(rs.getString("staff_address"));
