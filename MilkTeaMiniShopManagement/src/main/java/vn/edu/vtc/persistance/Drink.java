@@ -1,19 +1,11 @@
 package vn.edu.vtc.persistance;
 
 public class Drink {
-    private int drinkId;
     private String code;
     private String category;
     private String name;
     private Double unitPrice;
-
-    public int getDrinkId() {
-        return drinkId;
-    }
-
-    public void setDrinkId(int drinkId) {
-        this.drinkId = drinkId;
-    }
+    private int sold;
 
     public String getCode() {
         return code;
@@ -46,4 +38,13 @@ public class Drink {
     public void setUnitPrice(Double unitPrice) {
         this.unitPrice = unitPrice;
     }
+
+    public int getSold() {
+        return sold;
+    }
+
+    public void setSold(int sold) {
+        this.sold = sold;
+    }
+
 }

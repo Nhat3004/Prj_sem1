@@ -27,7 +27,8 @@ create table Drink(
     drink_code		varchar(10)		primary key not null,
     drink_category	varchar(60)		not null,
     drink_name 		varchar(60) 	not null,
-    drink_unit_price decimal(20,2)  default 0
+    drink_unit_price decimal(20,2)  default 0,
+    sold		int 			default 0
 );
 
 create table Invoice(

@@ -40,11 +40,8 @@ public class Shop {
 
     @Override
     public String toString() {
-        return "Shop{" +
-                "shopId=" + shopId +
-                ", name='" + name + '\'' +
-                ", tel='" + tel + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+        return "Shop: " + name +
+                ", tel: " + tel +
+                ", address: " + address;
     }
 }
