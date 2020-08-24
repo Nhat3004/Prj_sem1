@@ -46,10 +46,11 @@ public class LoginIU {
             } else {
                 Staff staff = StaffBL.login(acc, pss);
                 if (staff.getStaffId() == 0) {
-                    System.out.println("+---------------------------------------------------+\n");
-                    System.err.println("> Login fail!");
+                    System.out.println("+---------------------------------------------------+");
+                    System.out.println("> Login fail!");
                     log = true;
                 } else {
+                    System.out.println("+---------------------------------------------------+");
                     System.out.println("> Login successfully!");
                     System.out.printf("> Welcome %s %s.\n", staff.getPosition(), staff.getName());
                     log = false;

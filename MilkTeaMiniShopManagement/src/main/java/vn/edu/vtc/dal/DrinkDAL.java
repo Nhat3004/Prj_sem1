@@ -2,10 +2,7 @@ package vn.edu.vtc.dal;
 
 import vn.edu.vtc.persistance.Drink;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +12,7 @@ public class DrinkDAL {
         List<Drink> lst = new ArrayList<>();
         try (Connection con = DbUtil.getConnection();
              Statement stm = con.createStatement();
-             ResultSet rs = stm.executeQuery(sql);) {
+             ResultSet rs = stm.executeQuery(sql)) {
             while (rs.next()) {
                 lst.add(getDrink(rs));
             }
@@ -32,5 +29,37 @@ public class DrinkDAL {
         drink.setName(rs.getString("drink_name"));
         drink.setUnitPrice(rs.getDouble("drink_unit_price"));
         return drink;
+    }
+
+    public static int insertDrink(Drink drink) {
+        int result;
+        String callStoreProcedure = "call sp_insertDrink(?,?,?,?,?)";
+        try (CallableStatement cstm = DbUtil.getConnection().prepareCall(callStoreProcedure)) {
+            cstm.setString(1, drink.getCode());
+            cstm.setString(2, drink.getCategory());
+            cstm.setString(3, drink.getName());
+            cstm.setDouble(4, drink.getUnitPrice());
+            cstm.registerOutParameter(5, Types.INTEGER);
+            cstm.execute();
+            result = cstm.getInt(5);
+        } catch (Exception e) {
+            result = -1;
+        }
+        return result;
+    }
+
+    public static int updateDrink(Drink drink) {
+        int result;
+        String callStoreProcedure = "call sp_updateDrink(?,?,?)";
+        try (CallableStatement cstm = DbUtil.getConnection().prepareCall(callStoreProcedure)) {
+            cstm.setString(1, drink.getCode());
+            cstm.setDouble(2, drink.getUnitPrice());
+            cstm.registerOutParameter(3, Types.INTEGER);
+            cstm.execute();
+            result = cstm.getInt(3);
+        } catch (Exception e) {
+            result = -1;
+        }
+        return result;
     }
 }

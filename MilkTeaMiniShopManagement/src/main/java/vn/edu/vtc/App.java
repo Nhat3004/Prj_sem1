@@ -1,17 +1,17 @@
 package vn.edu.vtc;
 
-import vn.edu.vtc.bl.DrinkBL;
-import vn.edu.vtc.bl.StaffBL;
-import vn.edu.vtc.dal.ShopDAL;
+//import vn.edu.vtc.bl.DrinkBL;
+//import vn.edu.vtc.bl.StaffBL;
+//import vn.edu.vtc.dal.ShopDAL;
 import vn.edu.vtc.iu.LoginIU;
 import vn.edu.vtc.iu.ManagerIU;
-import vn.edu.vtc.persistance.Drink;
-import vn.edu.vtc.persistance.Shop;
-import vn.edu.vtc.persistance.Staff;
+//import vn.edu.vtc.persistance.Drink;
+//import vn.edu.vtc.persistance.Shop;
+//import vn.edu.vtc.persistance.Staff;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
+//import java.util.List;
 
 public class App {
     public static void main(String[] args) throws SQLException {
@@ -41,7 +41,7 @@ public class App {
 //        ManagerIU.showTopSold();
         pos = LoginIU.login();
         if (pos.equals("Manager")) {
-            ManagerIU.showTopSold();
+            ManagerIU.Manager();
         } else if (pos.equals("Staff")) {
 
         }

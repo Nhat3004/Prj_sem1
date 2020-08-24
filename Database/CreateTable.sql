@@ -23,14 +23,13 @@ create table Staff(
 );
 
 create table Drink(
-	-- drink_id 		int 			auto_increment	primary key,
-    drink_code		varchar(10)		primary key not null,
+	drink_id 		int 			auto_increment primary key,
+    drink_code		varchar(10)		not null unique,
     drink_category	varchar(60)		not null,
     drink_name 		varchar(60) 	not null,
     drink_unit_price decimal(20,2)  default 0,
     sold		int 			default 0
 );
-
 create table Invoice(
 	invoice_id		int			auto_increment	primary key,
     shop_id			int 		not null,
@@ -49,3 +48,20 @@ create table InvoiceDetails(
     constraint fk_InvoiceDetails_Drink foreign key(drink_code) references Drink(drink_code)
 );
 
+delimiter $$
+create procedure sp_insertDrink(IN code varchar(10), IN category varchar(60), IN name varchar(60), IN unitPrice decimal(20,2), OUT drinkId int)
+begin
+ insert into Drink(drink_code, drink_category, drink_name, drink_unit_price) value
+						(code, category, name, unitPrice);
+    select max(drink_id) into drinkId from Drink;
+end $$
+delimiter ;
+delimiter $$
+create procedure sp_updateDrink(IN code varchar(5), IN unitPrice decimal(20,2), OUT isTrue int)
+begin
+ update Drink
+ set drink_unit_price = unitPrice
+ where drink_code = code ;
+	select 1 into isTrue;
+end $$
+delimiter ;
