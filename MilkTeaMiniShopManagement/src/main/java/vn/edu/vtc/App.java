@@ -26,27 +26,14 @@ public class App {
         }
         System.out.println("+---------------------------------------------------+\n");
 
-//        String acc = "cuongdeeptry1";
-//        String pss = "cuongDeeptry2";
-//        StaffBL stt = new StaffBL();
-//        ShopDAL spd = new ShopDAL();
-//        Staff st = new Staff();
-//        Shop sp = new Shop();
-//        sp = spd.getShopById(1);
-//        st = stt.login(acc, pss);
-//        System.out.println(st);
-//        System.out.println(sp);
-//        if (st.getPosition().equals("Staff")) {
-//            System.out.println(st.getName() + " is a " + st.getPosition());
-//        }
-//        ManagerIU.showTopSold();
         pos = LoginIU.login();
         if (pos.equals("Manager")) {
             ManagerIU.Manager();
         } else if (pos.equals("Staff")) {
             StaffIU.Staff();
         }
-        System.out.println("See you later!");
+
+        System.out.println("\nSee you later!");
         System.out.println("|           _               |\n" +
                 "|       .__(.)< (MEOW,MEOW) |\n" +
                 "|        \\___)              |\n" +
