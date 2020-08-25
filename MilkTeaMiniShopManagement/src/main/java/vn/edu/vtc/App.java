@@ -1,23 +1,14 @@
 package vn.edu.vtc;
 
-//import vn.edu.vtc.bl.DrinkBL;
-//import vn.edu.vtc.bl.StaffBL;
-//import vn.edu.vtc.dal.ShopDAL;
-
+import vn.edu.vtc.bl.StaffBL;
 import vn.edu.vtc.iu.LoginIU;
-import vn.edu.vtc.iu.ManagerIU;
-import vn.edu.vtc.iu.StaffIU;
-//import vn.edu.vtc.persistance.Drink;
-//import vn.edu.vtc.persistance.Shop;
-//import vn.edu.vtc.persistance.Staff;
+import vn.edu.vtc.persistance.Staff;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-//import java.util.List;
 
 public class App {
     public static void main(String[] args) throws SQLException {
-        int StaffID;
         System.out.println("+---------------------------------------------------+");
         try (Connection con = vn.edu.vtc.dal.DbUtil.getConnection()) {
             System.out.println("| Connected to MySql Server successfully.           |");
