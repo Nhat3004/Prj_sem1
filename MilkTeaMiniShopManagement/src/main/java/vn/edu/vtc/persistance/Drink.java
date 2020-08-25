@@ -5,6 +5,8 @@ public class Drink {
     private String category;
     private String name;
     private Double unitPrice;
+    private int quantity;
+    private Double amount;
     private int sold;
 
     public String getCode() {
@@ -37,6 +39,22 @@ public class Drink {
 
     public void setUnitPrice(Double unitPrice) {
         this.unitPrice = unitPrice;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     public int getSold() {

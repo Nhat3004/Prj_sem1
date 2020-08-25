@@ -21,9 +21,10 @@ public class ManagerIU {
             System.out.println("| >1. Show top sold drink.         |");
             System.out.println("| >2. Insert new drink.            |");
             System.out.println("| >3. Update drink(unit price).    |");
+            System.out.println("| >4. Log out.                     |");
             System.out.println("| >0. Exit app.                    |");
             System.out.println("+----------------------------------+");
-            System.out.print(">Enter[0-3]: ");
+            System.out.print(">Enter[0-4]: ");
             selection = scn().nextLine();
 
             switch (selection) {
@@ -36,6 +37,9 @@ public class ManagerIU {
                 case "3":
                     updateDrink();
                     break;
+                case "4":
+                    LoginIU.login();
+                    break;
                 case "0":
                     selection = null;
                     break;
@@ -45,7 +49,7 @@ public class ManagerIU {
         }
     }
 
-    public static void showTopSold() {
+    private static void showTopSold() {
         int i = 1;
         while (i != 0) {
             ls = DrinkBL.getAllDrink();
@@ -72,7 +76,7 @@ public class ManagerIU {
         }
     }
 
-    public static void insertDrink() {
+    private static void insertDrink() {
         System.out.println("+----------------------------------+");
         System.out.println("| >Insert new drink.               |");
         System.out.println("+----------------------------------+");
@@ -105,7 +109,7 @@ public class ManagerIU {
 
     }
 
-    public static void updateDrink() {
+    private static void updateDrink() {
         System.out.println("+----------------------------------+");
         System.out.println("| >Update drink.                   |");
         System.out.println("+----------------------------------+");
@@ -140,7 +144,7 @@ public class ManagerIU {
         }
     }
 
-    private static Drink getByCode(String code) {
+    public static Drink getByCode(String code) {
         Drink drink1 = new Drink();
         ls = DrinkBL.getAllDrink();
         for (Drink drink : ls) {

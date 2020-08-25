@@ -16,7 +16,6 @@ import java.sql.SQLException;
 
 public class App {
     public static void main(String[] args) throws SQLException {
-        String pos;
         System.out.println("+---------------------------------------------------+");
         try (Connection con = vn.edu.vtc.dal.DbUtil.getConnection()) {
             System.out.println("| Connected to MySql Server successfully.           |");
@@ -26,17 +25,12 @@ public class App {
         }
         System.out.println("+---------------------------------------------------+\n");
 
-        pos = LoginIU.login();
-        if (pos.equals("Manager")) {
-            ManagerIU.Manager();
-        } else if (pos.equals("Staff")) {
-            StaffIU.Staff();
-        }
+        LoginIU.login();
 
         System.out.println("\nSee you later!");
-        System.out.println("|           _               |\n" +
-                "|       .__(.)< (MEOW,MEOW) |\n" +
-                "|        \\___)              |\n" +
-                "|~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
+        System.out.println("|~~~~~~~~~~~_~~~~~~~~~~~~~~~|\n" +
+                            "|       .__(.)< (MEOW,MEOW) |\n" +
+                            "|        \\___)              |\n" +
+                            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
     }
 }

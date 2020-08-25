@@ -14,7 +14,7 @@ public class LoginIU {
 
     private static String pos;
 
-    public static String login() {
+    public static void login() {
         System.out.println("+---------------------------------------------------+");
         System.out.println("| Welcome to our app: Milk Tea mini shop management.|");
         System.out.println("| Please login to use your features. ^^^            |");
@@ -34,7 +34,7 @@ public class LoginIU {
 //            System.out.println("Couldn't get Console instance");
 //            System.exit(0);
 //        }
-//        char[] passwordArray = console.readPassword("Enter your password: ");
+//        char[] passwordArray = console.readPassword("| Enter your password: ");
 //        pss = new String(passwordArray);
             if (!StaffBL.accountRegex(acc)) {
                 System.out.println("> Your account is invalid, 8-20 characters, at least\none uppercase letter, one lowercase letter and one\nnumber.");
@@ -48,6 +48,7 @@ public class LoginIU {
                 if (staff.getStaffId() == 0) {
                     System.out.println("+---------------------------------------------------+");
                     System.out.println("> Login fail!");
+                    System.out.println("> Incorrect password or account doesn't exist.");
                     log = true;
                 } else {
                     System.out.println("+---------------------------------------------------+");
@@ -59,6 +60,10 @@ public class LoginIU {
                 System.out.println("+---------------------------------------------------+\n");
             }
         }
-        return pos;
+        if (pos.equals("Manager")) {
+            ManagerIU.Manager();
+        } else if (pos.equals("Staff")) {
+            StaffIU.Staff();
+        }
     }
 }

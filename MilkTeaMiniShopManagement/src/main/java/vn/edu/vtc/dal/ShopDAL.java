@@ -5,7 +5,7 @@ import vn.edu.vtc.persistance.Shop;
 import java.sql.*;
 
 public class ShopDAL {
-    public Shop getShop(final ResultSet rs) throws SQLException {
+    public static Shop getShop(final ResultSet rs) throws SQLException {
         Shop sp = new Shop();
         sp.setName(rs.getString("shop_name"));
         sp.setAddress(rs.getString("shop_address"));
@@ -13,7 +13,7 @@ public class ShopDAL {
         return sp;
     }
 
-    public Shop getShopById(int id) throws SQLException {
+    public static Shop getShopById(int id) throws SQLException {
         Shop shop = new Shop();
         String sql = "select * from Shop where shop_id=" + id;
         try (Connection conn = DbUtil.getConnection();
