@@ -73,3 +73,9 @@ insert into Drink(drink_code, drink_category, drink_name, drink_unit_price)
         ('YY07', 'Sữa chua uống' , 'Sữa chua uống vị dâu tây', 39000),
         ('HD01', 'Đồ uống nóng', 'Trà gừng', 25000),
         ('HD02', 'Đồ uống nóng', 'Trà sữa gừng', 32000);
+        
+call sp_insertInvoice(1,1);
+call sp_insertInvoiceDetails(1,'HD02', 10);
+call sp_insertInvoiceDetails(1,'HD01', 10);
+call sp_insertInvoiceDetails(1,'YY07', 10);
+call sp_insertInvoiceDetails(1,'YY06', 10);

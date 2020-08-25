@@ -3,6 +3,7 @@ package vn.edu.vtc.iu;
 import vn.edu.vtc.bl.DrinkBL;
 import vn.edu.vtc.persistance.Drink;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +15,7 @@ public class ManagerIU {
         return new Scanner(System.in);
     }
 
-    public static void Manager() {
+    public static void Manager() throws SQLException {
         String selection = "1";
         while (selection != null) {
             System.out.println("+----------------------------------+");
@@ -39,6 +40,7 @@ public class ManagerIU {
                     break;
                 case "4":
                     LoginIU.login();
+                    selection = null;
                     break;
                 case "0":
                     selection = null;
@@ -47,6 +49,7 @@ public class ManagerIU {
                     System.out.println("Retry, please.\n");
             }
         }
+
     }
 
     private static void showTopSold() {
@@ -58,11 +61,11 @@ public class ManagerIU {
             System.out.printf("| %-10s| %-25s| %-35s| %-10s| %-5s|\n", "Code", "Category", "Name", "Unit Price", "Sold");
             System.out.println("+-----------+--------------------------+------------------------------------+-----------+------+");
             if (i <= ls.size() / 10) {
-                for (int j = i * 10 - 9; j < i * 10; j++) {
+                for (int j = i * 10 - 10; j < i * 10; j++) {
                     System.out.printf("| %-10s| %-25s| %-35s| %10.1f| %5d|\n", ls.get(j).getCode(), ls.get(j).getCategory(), ls.get(j).getName(), ls.get(j).getUnitPrice(), ls.get(j).getSold());
                 }
             } else {
-                for (int j = i * 10 - 9; j < ls.size(); j++) {
+                for (int j = i * 10 - 10; j < ls.size(); j++) {
                     System.out.printf("| %-10s| %-25s| %-35s| %10.1f| %5d|\n", ls.get(j).getCode(), ls.get(j).getCategory(), ls.get(j).getName(), ls.get(j).getUnitPrice(), ls.get(j).getSold());
                 }
             }

@@ -23,8 +23,23 @@ public class StaffDAL {
         }
         return staff;
     }
+    public static Staff getStaffByID(int id){
+        Staff staff = new Staff();
+        String sql = "select * from Staff where staff_id="+id;
+        try (Connection conn = DbUtil.getConnection();
+             Statement stm = conn.createStatement();
+             ResultSet rs = stm.executeQuery(sql)) {
+            while (rs.next()) {
+                staff = getStaff(rs);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            staff = null;
+        }
+        return staff;
 
-    public Staff getStaff(final ResultSet rs) throws SQLException {
+    }
+    public static Staff getStaff(final ResultSet rs) throws SQLException {
         Staff st = new Staff();
         st.setStaffId(rs.getInt("staff_id"));
         st.setName(rs.getString("staff_name"));

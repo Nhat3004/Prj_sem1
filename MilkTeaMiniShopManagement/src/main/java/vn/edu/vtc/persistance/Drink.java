@@ -65,4 +65,16 @@ public class Drink {
         this.sold = sold;
     }
 
+    @Override
+    public String toString() {
+        return "Drink{" +
+                "code='" + code + '\'' +
+                ", category='" + category + '\'' +
+                ", name='" + name + '\'' +
+                ", unitPrice=" + unitPrice +
+                ", quantity=" + quantity +
+                ", amount=" + amount +
+                ", sold=" + sold +
+                '}';
+    }
 }

@@ -4,6 +4,7 @@ import vn.edu.vtc.bl.StaffBL;
 import vn.edu.vtc.persistance.Staff;
 
 //import java.io.Console;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class LoginIU {
@@ -14,7 +15,8 @@ public class LoginIU {
 
     private static String pos;
 
-    public static void login() {
+    public static void login() throws SQLException {
+        int id = 0;
         System.out.println("+---------------------------------------------------+");
         System.out.println("| Welcome to our app: Milk Tea mini shop management.|");
         System.out.println("| Please login to use your features. ^^^            |");
@@ -56,6 +58,7 @@ public class LoginIU {
                     System.out.printf("> Welcome %s %s.\n", staff.getPosition(), staff.getName());
                     log = false;
                     pos = staff.getPosition();
+                    id= staff.getStaffId();
                 }
                 System.out.println("+---------------------------------------------------+\n");
             }
@@ -63,7 +66,7 @@ public class LoginIU {
         if (pos.equals("Manager")) {
             ManagerIU.Manager();
         } else if (pos.equals("Staff")) {
-            StaffIU.Staff();
+            StaffIU.Staff(id);
         }
     }
 }

@@ -3,6 +3,7 @@ package vn.edu.vtc;
 //import vn.edu.vtc.bl.DrinkBL;
 //import vn.edu.vtc.bl.StaffBL;
 //import vn.edu.vtc.dal.ShopDAL;
+
 import vn.edu.vtc.iu.LoginIU;
 import vn.edu.vtc.iu.ManagerIU;
 import vn.edu.vtc.iu.StaffIU;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 
 public class App {
     public static void main(String[] args) throws SQLException {
+        int StaffID;
         System.out.println("+---------------------------------------------------+");
         try (Connection con = vn.edu.vtc.dal.DbUtil.getConnection()) {
             System.out.println("| Connected to MySql Server successfully.           |");
@@ -29,8 +31,8 @@ public class App {
 
         System.out.println("\nSee you later!");
         System.out.println("|~~~~~~~~~~~_~~~~~~~~~~~~~~~|\n" +
-                            "|       .__(.)< (MEOW,MEOW) |\n" +
-                            "|        \\___)              |\n" +
-                            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
+                "|       .__(.)< (MEOW,MEOW) |\n" +
+                "|        \\___)              |\n" +
+                "|~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
     }
 }

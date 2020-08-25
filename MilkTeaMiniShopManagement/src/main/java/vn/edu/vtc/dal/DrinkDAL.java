@@ -28,6 +28,7 @@ public class DrinkDAL {
         drink.setCategory(rs.getString("drink_category"));
         drink.setName(rs.getString("drink_name"));
         drink.setUnitPrice(rs.getDouble("drink_unit_price"));
+        drink.setSold(rs.getInt("sold"));
         return drink;
     }
 

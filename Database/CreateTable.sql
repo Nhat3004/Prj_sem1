@@ -47,6 +47,21 @@ create table InvoiceDetails(
     constraint fk_InvoiceDetails_Invoice foreign key(invoice_id) references Invoice(invoice_id),
     constraint fk_InvoiceDetails_Drink foreign key(drink_code) references Drink(drink_code)
 );
+delimiter $$
+create procedure sp_insertInvoice(IN shopID int , IN staffID int)
+begin
+	insert into Invoice(shop_id, staff_id) 
+			value(shopID, staffID);
+end $$
+delimiter ;
+delimiter $$
+create procedure sp_insertInvoiceDetails(IN invoiceID int , IN drinkCode varchar(10), IN quantity int)
+begin
+	call sp_updateDrinkSold(drinkCode, quantity);
+	insert into InvoiceDetails(invoice_id, drink_code, quantity) 
+			value(invoiceID, drinkCode, quantity);
+end $$
+delimiter ;
 
 delimiter $$
 create procedure sp_insertDrink(IN code varchar(10), IN category varchar(60), IN name varchar(60), IN unitPrice decimal(20,2), OUT drinkId int)
@@ -57,11 +72,28 @@ begin
 end $$
 delimiter ;
 delimiter $$
-create procedure sp_updateDrink(IN code varchar(5), IN unitPrice decimal(20,2), OUT isTrue int)
+create procedure sp_updateDrink(IN code varchar(10), IN unitPrice decimal(20,2), OUT isTrue int)
 begin
  update Drink
  set drink_unit_price = unitPrice
  where drink_code = code ;
 	select 1 into isTrue;
+end $$
+delimiter ;
+delimiter $$
+create procedure sp_updateDrinkSold(IN code varchar(10), IN quantity int)
+begin 
+	update Drink
+    set sold = sold + quantity
+    where drink_code = code;
+end $$
+delimiter ;
+delimiter $$
+create procedure sp_updateInvoiceDetails(IN invoiceID int , IN drinkCode varchar(10), IN quantityNew int, IN changes int)
+begin
+	call sp_updateDrinkSold(drinkCode, changes);
+    update InvoiceDetails
+    set quantity = quantityNew
+    where invoice_id = invoiceID AND drink_code = drinkCode;
 end $$
 delimiter ;

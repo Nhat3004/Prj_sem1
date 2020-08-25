@@ -40,8 +40,8 @@ public class Shop {
 
     @Override
     public String toString() {
-        return "Shop: " + name +
-                ", tel: " + tel +
+        return name +
+                "\nTel: " + tel +
                 ", address: " + address;
     }
 }

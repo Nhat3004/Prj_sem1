@@ -6,7 +6,6 @@ import vn.edu.vtc.persistance.Staff;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 
 public class StaffBL {
     private static StaffDAL dal = new StaffDAL();
