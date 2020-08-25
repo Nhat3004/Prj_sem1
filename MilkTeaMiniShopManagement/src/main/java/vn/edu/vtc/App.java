@@ -5,6 +5,7 @@ package vn.edu.vtc;
 //import vn.edu.vtc.dal.ShopDAL;
 import vn.edu.vtc.iu.LoginIU;
 import vn.edu.vtc.iu.ManagerIU;
+import vn.edu.vtc.iu.StaffIU;
 //import vn.edu.vtc.persistance.Drink;
 //import vn.edu.vtc.persistance.Shop;
 //import vn.edu.vtc.persistance.Staff;
@@ -17,7 +18,7 @@ public class App {
     public static void main(String[] args) throws SQLException {
         String pos;
         System.out.println("+---------------------------------------------------+");
-        try (Connection con = vn.edu.vtc.dal.DbUtil.getConnection();) {
+        try (Connection con = vn.edu.vtc.dal.DbUtil.getConnection()) {
             System.out.println("| Connected to MySql Server successfully.           |");
         } catch (SQLException ex) {
             System.out.println("| Connection Error!                                 |");
@@ -43,7 +44,7 @@ public class App {
         if (pos.equals("Manager")) {
             ManagerIU.Manager();
         } else if (pos.equals("Staff")) {
-
+            StaffIU.Staff();
         }
         System.out.println("See you later!");
         System.out.println("|           _               |\n" +

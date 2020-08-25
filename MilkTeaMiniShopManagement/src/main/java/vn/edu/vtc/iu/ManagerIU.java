@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class ManagerIU {
     private static List<Drink> ls = new ArrayList<>();
 
-    public static Scanner scn() {
+    private static Scanner scn() {
         return new Scanner(System.in);
     }
 
