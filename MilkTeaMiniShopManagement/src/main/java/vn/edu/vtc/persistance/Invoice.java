@@ -5,7 +5,6 @@ public class Invoice {
     private int shopId;
     private int staffId;
     private String date;
-    private Double totalPayment;
 
     public int getId() {
         return id;
@@ -39,22 +38,13 @@ public class Invoice {
         this.date = date;
     }
 
-    public Double getTotalPayment() {
-        return totalPayment;
-    }
-
-    public void setTotalPayment(Double totalPayment) {
-        this.totalPayment = totalPayment;
-    }
-
-    @Override
+   @Override
     public String toString() {
         return "Invoice{" +
                 "id=" + id +
                 ", shopId=" + shopId +
                 ", staffId=" + staffId +
                 ", date='" + date + '\'' +
-                ", totalPayment=" + totalPayment +
                 '}';
     }
 }

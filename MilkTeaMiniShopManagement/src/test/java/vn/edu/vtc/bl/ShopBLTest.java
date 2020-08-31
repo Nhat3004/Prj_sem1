@@ -19,7 +19,7 @@ public class ShopBLTest {
             expected.setShopId(1);
             expected.setName("VTC Milk Tea");
             expected.setTel("0837827421");
-            expected.setAddress("18 Tam Trinh Hai Bà Trưng Hà Nội");
+            expected.setAddress("18 Tam Trinh Hai Ba Trung Ha Noi");
             System.out.println(expected.hashCode());
             System.out.println(actual.hashCode());
             Assert.assertTrue(actual.getName().equals(expected.getName()));

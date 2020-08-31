@@ -4,12 +4,10 @@ import vn.edu.vtc.bl.DrinkBL;
 import vn.edu.vtc.persistance.Drink;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class ManagerIU {
-    private static List<Drink> ls = new ArrayList<>();
 
     private static Scanner scn() {
         return new Scanner(System.in);
@@ -19,7 +17,7 @@ public class ManagerIU {
         String selection = "1";
         while (selection != null) {
             System.out.println("+----------------------------------+");
-            System.out.println("| >1. Show top sold drink.         |");
+            System.out.println("| >1. Show all drink order by sold.|");
             System.out.println("| >2. Insert new drink.            |");
             System.out.println("| >3. Update drink(unit price).    |");
             System.out.println("| >4. Log out.                     |");
@@ -55,7 +53,7 @@ public class ManagerIU {
     private static void showTopSold() {
         int i = 1;
         while (i != 0) {
-            ls = DrinkBL.getAllDrink();
+            List<Drink> ls = DrinkBL.getAllDrink();
             System.out.printf("Page: %d/%d\n", i, (ls.size() / 10) + 1);
             System.out.println("+-----------+--------------------------+------------------------------------+-----------+------+");
             System.out.printf("| %-10s| %-25s| %-35s| %-10s| %-5s|\n", "Code", "Category", "Name", "Unit Price", "Sold");
@@ -87,27 +85,27 @@ public class ManagerIU {
         Drink drink = new Drink();
         do {
             System.out.print(">Code: ");
-            drink.setCode(scn().nextLine());
-            if (getByCode(drink.getCode()).getCode() != null) {
+            drink.setCode(scn().nextLine().toUpperCase());
+            if (DrinkBL.getByCode(drink.getCode()).getCode() != null) {
                 System.out.println("Drink is existed!");
                 isExist = true;
             }
         } while (isExist);
-        System.out.print("Category:");
+        System.out.print(">Category:");
         drink.setCategory(scn().nextLine());
-        System.out.print("Name:");
+        System.out.print(">Input name of drink: ");
         drink.setName(scn().nextLine());
         do {
-            System.out.print("Unit price:");
+            System.out.print(">Input unit price: ");
             drink.setUnitPrice(scn().nextDouble());
             if (drink.getUnitPrice() <= 0) {
-                System.out.println("Unit price > 0!");
+                System.out.println(">Unit price must be greater than 0!");
             }
         } while (!(drink.getUnitPrice() > 0));
         if (DrinkBL.insertDrink(drink)) {
-            System.out.println("Insert successfully.");
+            System.out.println(">Insert successfully.");
         } else {
-            System.out.println("Insert fail.");
+            System.out.println(">Insert fail.");
         }
 
     }
@@ -120,42 +118,33 @@ public class ManagerIU {
         String code;
         Drink drink;
         do {
-            System.out.print(">Code: ");
-            code = scn().nextLine();
-            drink = getByCode(code);
+            System.out.print(">Input drink code: ");
+            code = scn().nextLine().toUpperCase();
+            drink = DrinkBL.getByCode(code);
+//            drink = getByCode(code);
             if (drink.getCode() == null) {
-                System.out.println("Drink isn't existed!");
+                System.out.println(">Drink isn't existed!");
                 isExist = false;
             } else {
                 System.out.println("+-----------+--------------------------+------------------------------------+-----------+------+");
-                System.out.printf("| %-10s| %-25s| %-35s| %-10.1f| %-5d|\n", drink.getCode(), drink.getCategory(), drink.getName(), drink.getUnitPrice(), drink.getSold());
+                System.out.printf("| %-10s| %-25s| %-35s| %-10s| %-5d|\n", drink.getCode(), drink.getCategory(), drink.getName(), String.format("%,.0f", drink.getUnitPrice()), drink.getSold());
                 System.out.println("+-----------+--------------------------+------------------------------------+-----------+------+");
                 isExist = true;
             }
         } while (!isExist);
         do {
-            System.out.print("Unit price:");
+            System.out.print(">Input new unit price:");
             drink.setUnitPrice(scn().nextDouble());
             if (drink.getUnitPrice() <= 0) {
-                System.out.println("Unit price > 0!");
+                System.out.println(">Unit price must be greater than 0!");
             }
         } while (!(drink.getUnitPrice() > 0));
         if (DrinkBL.updateDrink(drink)) {
-            System.out.println("Update successfully.");
+            System.out.println(">Update successfully.");
         } else {
-            System.out.println("Update fail.");
+            System.out.println(">Update fail.");
         }
-    }
+        System.out.println("+----------------------------------+\n");
 
-    public static Drink getByCode(String code) {
-        Drink drink1 = new Drink();
-        ls = DrinkBL.getAllDrink();
-        for (Drink drink : ls) {
-            if (drink.getCode().equals(code)) {
-                drink1 = drink;
-                break;
-            }
-        }
-        return drink1;
     }
 }

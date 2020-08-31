@@ -21,7 +21,20 @@ public class DrinkDAL {
         }
         return lst;
     }
-
+    public  static Drink getByCode(String code){
+        String sql = "Select * from Drink where drink_code='"+code+"'";
+        Drink drink = new Drink();
+        try (Connection con = DbUtil.getConnection();
+             Statement stm = con.createStatement();
+             ResultSet rs = stm.executeQuery(sql)) {
+            while (rs.next()) {
+                drink=getDrink(rs);
+            }
+        } catch (SQLException ex) {
+            drink = null;
+        }
+        return drink;
+    }
     public static Drink getDrink(final ResultSet rs) throws SQLException {
         Drink drink = new Drink();
         drink.setCode(rs.getString("drink_code"));

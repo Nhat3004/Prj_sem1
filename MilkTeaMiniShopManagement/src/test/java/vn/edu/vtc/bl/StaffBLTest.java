@@ -145,9 +145,9 @@ public class StaffBLTest {
             Staff actual = StaffBL.login("Nhatnl3004", "Nhatnl19024");
             Staff expected = new Staff();
             expected.setStaffId(1);
-            expected.setName("Nguyễn Long Nhật");
+            expected.setName("Nguyen Long Nhat");
             expected.setTel("0966452513");
-            expected.setAddress("Vĩnh Phúc");
+            expected.setAddress("Vinh Phuc");
             expected.setEmail("longnhat8556@gmail.com");
             expected.setId_card("026200004041");
             expected.setPosition("Staff");

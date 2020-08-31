@@ -1,18 +1,22 @@
 package vn.edu.vtc.iu;
 
+import vn.edu.vtc.bl.DrinkBL;
 import vn.edu.vtc.bl.InvoiceBL;
 import vn.edu.vtc.dal.InvoiceDAL;
 import vn.edu.vtc.dal.ShopDAL;
 import vn.edu.vtc.dal.StaffDAL;
 import vn.edu.vtc.persistance.Drink;
 import vn.edu.vtc.persistance.Invoice;
+import vn.edu.vtc.persistance.Shop;
+import vn.edu.vtc.persistance.Staff;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static vn.edu.vtc.iu.ManagerIU.getByCode;
 
 public class StaffIU {
     private static Scanner scn() {
@@ -21,6 +25,7 @@ public class StaffIU {
 
     public static void Staff(int staffID) throws SQLException {
         int shopID = 1;
+        int invoiceID;
         String selection = "1";
         while (selection != null) {
             while (selection != null) {
@@ -32,13 +37,14 @@ public class StaffIU {
                 System.out.println("+----------------------------------+");
                 System.out.print(">Enter[0-3]: ");
                 selection = scn().nextLine();
-
                 switch (selection) {
                     case "1":
-                        printInvoice(createOrder(staffID, shopID));
+                        invoiceID = createOrder(staffID, shopID);
+                        printInvoice(invoiceID);
                         break;
                     case "2":
-                        printInvoice(updateOrder());
+                        invoiceID = updateOrder();
+                        printInvoice(invoiceID);
                         break;
                     case "3":
                         LoginIU.login();
@@ -51,7 +57,6 @@ public class StaffIU {
                         System.out.println("Retry, please.\n");
                 }
             }
-
         }
     }
 
@@ -64,51 +69,60 @@ public class StaffIU {
         invoiceID = scn().nextInt();
         Invoice in = new Invoice();
         List<Drink> lst = new ArrayList<>();
-        lst = InvoiceDAL.getInvoiceDetails(invoiceID);
         in = InvoiceDAL.getInvoiceByID(invoiceID);
-        if (in == null) {
-            System.out.println("Invoice doesn't exist.");
+        System.out.println(in);
+        if (in.getId() == 0) {
+            System.out.println(">Invoice doesn't exist.");
+            invoiceID = 0;
         } else {
-            System.out.println("+------------------------------------------------------------------+");
-            int i = 1;
-            for (Drink drink : lst) {
-                System.out.printf("| %2d| %-30s| %10.1f| %5d| %10.1f|\n", i, drink.getName(), drink.getUnitPrice(), drink.getQuantity(), drink.getAmount());
-                i++;
-            }
-            System.out.println("+------------------------------------------------------------------+\n");
-        }
-        do {
-            System.out.print("> Drink code: ");
-            code = scn().nextLine();
-            for (Drink dr : lst) {
-                if (dr.getCode().equals(code)) {
-                    System.out.print("> New quantity: ");
-                    int temp, change;
-                    temp = scn().nextInt();
-                    change = temp - dr.getQuantity();
-                    dr.setQuantity(temp);
-                    update = InvoiceBL.updateInvoiceDetails(invoiceID, dr.getCode(), dr.getQuantity(), change);
-                    isExist = true;
-                }
-            }
-            if (update) {
-                System.out.println("> Update successfully.");
-            }
-            if (!isExist) {
-                System.out.println("> Drink code doesn't exist.");
-            }
-
-            String choice;
-            System.out.print("> Enter [S,s] to save update/ other key update another new drink:");
-            choice = scn().nextLine();
-            if (choice.equals("S") || choice.equals("s")) {
-                save = true;
+            lst = InvoiceDAL.getInvoiceDetails(invoiceID);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime localDateTime1 = LocalDateTime.now();
+            System.out.println(LocalDateTime.now().format(formatter));
+            LocalDateTime localDateTime2 = LocalDateTime.parse(in.getDate(), formatter);
+            System.out.println(localDateTime2.format(formatter));
+            long time = java.time.Duration.between(localDateTime2, localDateTime1).toMinutes();
+            if (time > 60.0) {
+                System.out.println("you can only update this invoice within 60 minutes of it being created.");
             } else {
-                save = false;
+                System.out.println("+------------------------------------------------------------------+");
+                int i = 1;
+                for (Drink drink : lst) {
+                    System.out.printf("| %2d| %-30s| %10s| %5d| %10s|\n", i, drink.getName(), String.format("%,.0f", drink.getUnitPrice()), drink.getQuantity(), String.format("%,.0f", drink.getAmount()));
+                    i++;
+                }
+                System.out.println("+------------------------------------------------------------------+\n");
+                do {
+                    System.out.print("> Drink code: ");
+                    code = scn().nextLine().toUpperCase();
+                    for (Drink dr : lst) {
+                        if (dr.getCode().equals(code)) {
+                            System.out.print("> New quantity: ");
+                            int temp, change;
+                            temp = scn().nextInt();
+                            change = temp - dr.getQuantity();
+                            dr.setQuantity(temp);
+                            update = InvoiceBL.updateInvoiceDetails(invoiceID, dr.getCode(), dr.getQuantity(), change);
+                            isExist = true;
+                        }
+                    }
+                    if (update) {
+                        System.out.println("> Update successfully.");
+                    }
+                    if (!isExist) {
+                        System.out.println("> Drink code doesn't exist.");
+                    }
+                    String choice;
+                    System.out.print("> Enter [S] to print updated invoice/ other key update another drink: ");
+                    choice = scn().nextLine().toUpperCase();
+                    if (choice.equals("S") || choice.equals("s")) {
+                        save = true;
+                    } else {
+                        save = false;
+                    }
+                } while (!save);
             }
-
-        } while (!save);
-
+        }
         return invoiceID;
     }
 
@@ -127,11 +141,13 @@ public class StaffIU {
             do {
                 System.out.print("> Drink code: ");
                 code = scn().nextLine();
-                Drink drink1 = getByCode(code);
+//                Drink drink1 = getByCode(code);
+                Drink drink1 = DrinkBL.getByCode(code);
                 if (drink1.getCode() == null) {
                     System.out.println("> Drink isn't existed!");
                     isExist = false;
                 } else {
+                    System.out.printf(" %s: %10sVND\n", drink1.getName(), String.format("%,.0f", drink1.getUnitPrice()));
                     isExist = true;
                 }
             } while (!isExist);
@@ -152,8 +168,7 @@ public class StaffIU {
                 drink.setQuantity(quantity);
                 dr.add(drink);
             }
-
-            System.out.print("> Enter [S,s] to save invoice/ other key add new drink:");
+            System.out.print("> Enter [S,s] to save and print invoice/ other key add new drink:");
             choice = scn().nextLine();
             if (choice.equals("S") || choice.equals("s")) {
                 save = true;
@@ -171,32 +186,47 @@ public class StaffIU {
         Invoice in = new Invoice();
         List<Drink> lst = new ArrayList<>();
         in = InvoiceDAL.getInvoiceByID(id);
-        if (in == null) {
-            System.out.println("> Invoice doesn't exist.");
+        double received, refund;
+        if (in.getId() == 0) {
+//            System.out.println("> Invoice doesn't exist.");
         } else {
             lst = InvoiceDAL.getInvoiceDetails(id);
-            System.out.println("+------------------------------------------------------------------+");
-            System.out.println(ShopDAL.getShopById(in.getShopId()));
-            System.out.println("+------------------------------------------------------------------+");
-            System.out.println("|                          INVOICE                                 |");
-            System.out.println("+------------------------------------------------------------------+");
-            System.out.printf("> Invoice code: %d\n", in.getId());
-            System.out.printf("> Date: %s.\n", in.getDate());
-            System.out.printf("> Staff: %s, tel: %s.\n", StaffDAL.getStaffByID(id).getName(), StaffDAL.getStaffByID(id).getTel());
-            System.out.println("+------------------------------------------------------------------+");
+            Staff st = StaffDAL.getStaffByID(in.getStaffId());
+            Shop sh = ShopDAL.getShopById(in.getShopId());
             int i = 1;
             double total = 0.0;
             for (Drink drink : lst) {
-                System.out.printf("| %2d| %-30s| %10.1f| %5d| %10.1f|\n", i, drink.getName(), drink.getUnitPrice(), drink.getQuantity(), drink.getAmount());
-                i++;
                 total = total + drink.getAmount();
             }
-            System.out.println("+------------------------------------------------------------------+");
-
-            System.out.printf("|                                        Total: %16.1fVND|\n", total);
-            System.out.println("+------------------------------------------------------------------+");
-            System.out.println("|                Get your laughing gear round this!                |");
-            System.out.println("+------------------------------------------------------------------+\n\n\n");
+            System.out.printf("Total payment: %10sVND\n", String.format("%,.0f", total));
+            do {
+                System.out.print("> Money given by customer: ");
+                received = scn().nextDouble();
+                if (received < total) {
+                    System.out.printf("Money given by customer must be greater than total payment: %10sVND\n", String.format("%,.0f", total));
+                }
+            } while (received < total);
+            System.out.println("\n+---------------------------------------------------------------------+");
+            System.out.println(sh);
+            System.out.println("+---------------------------------------------------------------------+");
+            System.out.println("|                            INVOICE                                  |");
+            System.out.println("+---------------------------------------------------------------------+");
+            System.out.printf("> Invoice code: %d\n", in.getId());
+            System.out.printf("> Date: %s.\n", in.getDate());
+            System.out.printf("> Staff: %s, tel: %s.\n", st.getName(), st.getTel());
+            System.out.println("+---------------------------------------------------------------------+");
+            for (Drink drink : lst) {
+                System.out.printf("| %2d| %-30s| %10s| %5d| %10sVND|\n", i, drink.getName(), String.format("%,.0f", drink.getUnitPrice()), drink.getQuantity(), String.format("%,.0f", drink.getAmount()));
+                i++;
+            }
+            refund = received - total;
+            System.out.println("+---------------------------------------------------------------------+");
+            System.out.printf("|                                        Total:    %16sVND|\n", String.format("%,.0f", total));
+            System.out.printf("|                                        Received: %16sVND|\n", String.format("%,.0f", received));
+            System.out.printf("|                                        Refund:   %16sVND|\n", String.format("%,.0f", refund));
+            System.out.println("+---------------------------------------------------------------------+");
+            System.out.println("|                 Get your laughing gear round this!                  |");
+            System.out.println("+---------------------------------------------------------------------+\n\n\n");
         }
 
     }
