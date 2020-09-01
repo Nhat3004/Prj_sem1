@@ -60,6 +60,62 @@ public class StaffIU {
         }
     }
 
+    private static int createOrder(int staffID, int shopID) {
+        int idInvoice = 1;
+        boolean save = false;
+
+        List<Drink> dr = new ArrayList<>();
+        idInvoice = InvoiceBL.insertInvoice(staffID, shopID);
+        do {
+            String code;
+            String choice;
+            int quantity;
+            boolean isExist, isExist2 = false;
+            Drink drink = new Drink();
+            do {
+                System.out.print("> Drink code: ");
+                code = scn().nextLine();
+//                Drink drink1 = getByCode(code);
+                Drink drink1 = DrinkBL.getByCode(code);
+                if (drink1.getCode() == null) {
+                    System.out.println("> Drink isn't existed!");
+                    isExist = false;
+                } else {
+                    System.out.printf(" %s: %10sVND\n", drink1.getName(), String.format("%,.0f", drink1.getUnitPrice()));
+                    isExist = true;
+                }
+            } while (!isExist);
+            do {
+                System.out.print("> Quantity: ");
+                quantity = scn().nextInt();
+            } while (quantity <= 0);
+            for (Drink drr : dr) {
+                if (drr.getCode().equals(code)) {
+                    int temp;
+                    temp = drr.getQuantity();
+                    drr.setQuantity(temp + quantity);
+                    isExist2 = true;
+                }
+            }
+            if (!isExist2) {
+                drink.setCode(code);
+                drink.setQuantity(quantity);
+                dr.add(drink);
+            }
+            System.out.print("> Enter [S,s] to save and print invoice/ other key add new drink:");
+            choice = scn().nextLine();
+            if (choice.equals("S") || choice.equals("s")) {
+                save = true;
+            } else {
+                save = false;
+            }
+        } while (!save);
+        for (Drink drr : dr) {
+            InvoiceBL.insertInvoiceDetails(idInvoice, drr.getCode(), drr.getQuantity());
+        }
+        return idInvoice;
+    }
+
     private static int updateOrder(int staffID) {
         int invoiceID;
         String code;
@@ -123,62 +179,6 @@ public class StaffIU {
             }
         }
         return invoiceID;
-    }
-
-    private static int createOrder(int staffID, int shopID) {
-        int idInvoice = 1;
-        boolean save = false;
-
-        List<Drink> dr = new ArrayList<>();
-        idInvoice = InvoiceBL.insertInvoice(staffID, shopID);
-        do {
-            String code;
-            String choice;
-            int quantity;
-            boolean isExist, isExist2 = false;
-            Drink drink = new Drink();
-            do {
-                System.out.print("> Drink code: ");
-                code = scn().nextLine();
-//                Drink drink1 = getByCode(code);
-                Drink drink1 = DrinkBL.getByCode(code);
-                if (drink1.getCode() == null) {
-                    System.out.println("> Drink isn't existed!");
-                    isExist = false;
-                } else {
-                    System.out.printf(" %s: %10sVND\n", drink1.getName(), String.format("%,.0f", drink1.getUnitPrice()));
-                    isExist = true;
-                }
-            } while (!isExist);
-            do {
-                System.out.print("> Quantity: ");
-                quantity = scn().nextInt();
-            } while (quantity <= 0);
-            for (Drink drr : dr) {
-                if (drr.getCode().equals(code)) {
-                    int temp;
-                    temp = drr.getQuantity();
-                    drr.setQuantity(temp + quantity);
-                    isExist2 = true;
-                }
-            }
-            if (!isExist2) {
-                drink.setCode(code);
-                drink.setQuantity(quantity);
-                dr.add(drink);
-            }
-            System.out.print("> Enter [S,s] to save and print invoice/ other key add new drink:");
-            choice = scn().nextLine();
-            if (choice.equals("S") || choice.equals("s")) {
-                save = true;
-            } else {
-                save = false;
-            }
-        } while (!save);
-        for (Drink drr : dr) {
-            InvoiceBL.insertInvoiceDetails(idInvoice, drr.getCode(), drr.getQuantity());
-        }
-        return idInvoice;
     }
 
     public static void printInvoice(int id) throws SQLException {

@@ -27,17 +27,17 @@ public class LoginIU {
             System.out.println("+---------------------------------------------------+");
             System.out.print("> Enter your account: ");
             String acc = scn().nextLine();
-            System.out.print("> Enter your password: ");
-            String pss = scn().nextLine();
+//            System.out.print("> Enter your password: ");
+//            String pss = scn().nextLine();
 
-//        Console console = System.console();
-//        if (console == null) {
-//            System.out.println("Couldn't get Console instance");
-//            System.exit(0);
-//        }
-//        String pss=null;
-//        char[] passwordArray = console.readPassword("> Enter your password: ");
-//        pss = new String(passwordArray);
+        Console console = System.console();
+        if (console == null) {
+            System.out.println("Couldn't get Console instance");
+            System.exit(0);
+        }
+        String pss=null;
+        char[] passwordArray = console.readPassword("> Enter your password: ");
+        pss = new String(passwordArray);
             System.out.println("+---------------------------------------------------+\n");
             if (!StaffBL.accountRegex(acc)) {
                 System.out.println("> Your account is invalid, 8-20 characters, at least\none uppercase letter, one lowercase letter and one\nnumber.");
