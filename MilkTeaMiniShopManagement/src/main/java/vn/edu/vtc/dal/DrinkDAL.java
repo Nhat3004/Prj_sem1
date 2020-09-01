@@ -35,10 +35,9 @@ public class DrinkDAL {
         }
         return drink;
     }
-    public static Drink getDrink(final ResultSet rs) throws SQLException {
+    private static Drink getDrink(final ResultSet rs) throws SQLException {
         Drink drink = new Drink();
         drink.setCode(rs.getString("drink_code"));
-        drink.setCategory(rs.getString("drink_category"));
         drink.setName(rs.getString("drink_name"));
         drink.setUnitPrice(rs.getDouble("drink_unit_price"));
         drink.setSold(rs.getInt("sold"));
@@ -47,16 +46,16 @@ public class DrinkDAL {
 
     public static int insertDrink(Drink drink) {
         int result;
-        String callStoreProcedure = "call sp_insertDrink(?,?,?,?,?)";
+        String callStoreProcedure = "call sp_insertDrink(?,?,?,?)";
         try (CallableStatement cstm = DbUtil.getConnection().prepareCall(callStoreProcedure)) {
             cstm.setString(1, drink.getCode());
-            cstm.setString(2, drink.getCategory());
-            cstm.setString(3, drink.getName());
-            cstm.setDouble(4, drink.getUnitPrice());
-            cstm.registerOutParameter(5, Types.INTEGER);
+            cstm.setString(2, drink.getName());
+            cstm.setDouble(3, drink.getUnitPrice());
+            cstm.registerOutParameter(4, Types.INTEGER);
             cstm.execute();
-            result = cstm.getInt(5);
+            result = cstm.getInt(4);
         } catch (Exception e) {
+            System.out.println(e);
             result = -1;
         }
         return result;

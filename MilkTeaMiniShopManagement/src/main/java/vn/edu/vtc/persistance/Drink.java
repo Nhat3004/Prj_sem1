@@ -2,7 +2,6 @@ package vn.edu.vtc.persistance;
 
 public class Drink {
     private String code;
-    private String category;
     private String name;
     private Double unitPrice;
     private int quantity;
@@ -15,14 +14,6 @@ public class Drink {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public String getName() {
@@ -69,7 +60,6 @@ public class Drink {
     public String toString() {
         return "Drink{" +
                 "code='" + code + '\'' +
-                ", category='" + category + '\'' +
                 ", name='" + name + '\'' +
                 ", unitPrice=" + unitPrice +
                 ", quantity=" + quantity +

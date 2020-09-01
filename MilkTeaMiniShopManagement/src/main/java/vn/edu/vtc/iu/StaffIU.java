@@ -43,7 +43,7 @@ public class StaffIU {
                         printInvoice(invoiceID);
                         break;
                     case "2":
-                        invoiceID = updateOrder();
+                        invoiceID = updateOrder(staffID);
                         printInvoice(invoiceID);
                         break;
                     case "3":
@@ -60,7 +60,7 @@ public class StaffIU {
         }
     }
 
-    private static int updateOrder() {
+    private static int updateOrder(int staffID) {
         int invoiceID;
         String code;
 
@@ -70,7 +70,6 @@ public class StaffIU {
         Invoice in = new Invoice();
         List<Drink> lst = new ArrayList<>();
         in = InvoiceDAL.getInvoiceByID(invoiceID);
-        System.out.println(in);
         if (in.getId() == 0) {
             System.out.println(">Invoice doesn't exist.");
             invoiceID = 0;
@@ -78,13 +77,13 @@ public class StaffIU {
             lst = InvoiceDAL.getInvoiceDetails(invoiceID);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDateTime localDateTime1 = LocalDateTime.now();
-            System.out.println(LocalDateTime.now().format(formatter));
             LocalDateTime localDateTime2 = LocalDateTime.parse(in.getDate(), formatter);
-            System.out.println(localDateTime2.format(formatter));
             long time = java.time.Duration.between(localDateTime2, localDateTime1).toMinutes();
-            if (time > 60.0) {
+            if (time > 60.0 && staffID == in.getStaffId()) {
                 System.out.println("you can only update this invoice within 60 minutes of it being created.");
-            } else {
+            } else if (staffID != in.getStaffId()) {
+                System.out.println("You are not allow to update this invoice!");
+            } else if (time <= 60 && staffID == in.getStaffId()) {
                 System.out.println("+------------------------------------------------------------------+");
                 int i = 1;
                 for (Drink drink : lst) {

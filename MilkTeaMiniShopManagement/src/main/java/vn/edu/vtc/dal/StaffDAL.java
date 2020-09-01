@@ -39,7 +39,7 @@ public class StaffDAL {
         return staff;
 
     }
-    public static Staff getStaff(final ResultSet rs) throws SQLException {
+    private static Staff getStaff(final ResultSet rs) throws SQLException {
         Staff st = new Staff();
         st.setStaffId(rs.getInt("staff_id"));
         st.setName(rs.getString("staff_name"));

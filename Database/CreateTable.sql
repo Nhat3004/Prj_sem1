@@ -25,7 +25,6 @@ create table Staff(
 create table Drink(
 	drink_id 		int 			auto_increment primary key,
     drink_code		varchar(10)		not null unique,
-    drink_category	varchar(60)		not null,
     drink_name 		varchar(60) 	not null,
     drink_unit_price decimal(20,2)  default 0,
     sold		int 			default 0
@@ -64,10 +63,10 @@ end $$
 delimiter ;
 
 delimiter $$
-create procedure sp_insertDrink(IN code varchar(10), IN category varchar(60), IN name varchar(60), IN unitPrice decimal(20,2), OUT drinkId int)
+create procedure sp_insertDrink(IN code varchar(10), IN name varchar(60), IN unitPrice decimal(20,2), OUT drinkId int)
 begin
- insert into Drink(drink_code, drink_category, drink_name, drink_unit_price) value
-						(code, category, name, unitPrice);
+ insert into Drink(drink_code, drink_name, drink_unit_price) value
+						(code, name, unitPrice);
     select max(drink_id) into drinkId from Drink;
 end $$
 delimiter ;

@@ -25,9 +25,9 @@ public class LoginIU {
         boolean log = true;
         while (log) {
             System.out.println("+---------------------------------------------------+");
-            System.out.print("| Enter your account: ");
+            System.out.print("> Enter your account: ");
             String acc = scn().nextLine();
-            System.out.print("| Enter your password: ");
+            System.out.print("> Enter your password: ");
             String pss = scn().nextLine();
 
 //        Console console = System.console();
@@ -36,7 +36,7 @@ public class LoginIU {
 //            System.exit(0);
 //        }
 //        String pss=null;
-//        char[] passwordArray = console.readPassword("| Enter your password: ");
+//        char[] passwordArray = console.readPassword("> Enter your password: ");
 //        pss = new String(passwordArray);
             System.out.println("+---------------------------------------------------+\n");
             if (!StaffBL.accountRegex(acc)) {
